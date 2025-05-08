@@ -1,0 +1,20 @@
+﻿
+namespace Models
+{
+    public class SystemInfoObject : BaseInfoObject
+    {
+        public SystemObject[]? SystemObjects { get; set; }
+
+        public class SystemObject
+        {
+            public string? Id { get; set; }
+            public string? Class { get; set; }
+            public bool Claimed { get; set; }
+            public string? Description { get; set; }
+            public string? Product { get; set; }
+            public string? Serial { get; set; }
+            public int Width { get; set; }
+        }
+
+    }
+}
