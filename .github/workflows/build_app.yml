@@ -41,7 +41,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up .NET Core
+      - name: Set up .NET Core App
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
