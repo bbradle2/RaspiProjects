@@ -1,4 +1,4 @@
-﻿namespace RaspiConfigGui
+﻿namespace UserInterface
 {
     partial class MainForm
     {
@@ -40,7 +40,7 @@
             MainPanel.Dock = DockStyle.Fill;
             MainPanel.Location = new Point(0, 0);
             MainPanel.Name = "MainPanel";
-            MainPanel.Size = new Size(686, 390);
+            MainPanel.Size = new Size(810, 390);
             MainPanel.TabIndex = 0;
             // 
             // CmbHttpEndPoints
@@ -57,9 +57,12 @@
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(686, 390);
+            ClientSize = new Size(810, 390);
             Controls.Add(MainPanel);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "MainForm";
+            SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterScreen;
             FormClosed += MainForm_FormClosed;
             MainPanel.ResumeLayout(false);

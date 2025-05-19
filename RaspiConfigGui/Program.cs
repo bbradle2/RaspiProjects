@@ -1,10 +1,11 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Threading;
+using RaspiDashboard.Controllers;
+using UserInterface;
+using RaspiDashboard.Interfaces;
 
-namespace RaspiConfigGui
+namespace RaspiDashboard
 {
     internal static class Program
     {
@@ -31,12 +32,14 @@ namespace RaspiConfigGui
             await host.WaitForShutdownAsync();
 
         }
+
         static IHostBuilder CreateHostBuilder()
         {
             
             return Host.CreateDefaultBuilder().ConfigureServices((context, services) => 
             {
                 services.AddTransient<MainForm>();
+                services.AddTransient<IRaspiApiController, RaspiApiController>();
 
                 var connName = context.Configuration["ConnectionName"];
                 services.AddHttpClient(connName!, (s, c) =>
