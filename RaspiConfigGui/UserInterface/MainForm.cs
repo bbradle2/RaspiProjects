@@ -7,11 +7,12 @@ namespace UserInterface
 
     public partial class MainForm : Form
     {
+
         private readonly IRaspiApiController _raspiApiController;
         private readonly IConfiguration _config;
         private readonly IServiceProvider _serviceProvider;
-
         private bool _isConnected = false;
+        public bool IsClosed = false;
 
         public MainForm(IConfiguration config, IServiceProvider serviceProvider, IRaspiApiController raspiApiController)
         {
@@ -22,6 +23,7 @@ namespace UserInterface
             _raspiApiController = raspiApiController;
 
             InitMainForm().GetAwaiter();
+
         }
 
         private async Task InitMainForm()
@@ -42,7 +44,7 @@ namespace UserInterface
 
                 var selectedItem = CmbHttpEndPoints.SelectedItem as HttpEndPoint;
                 await _raspiApiController.CallApiAsync(selectedItem!);
-                               
+                _ = _raspiApiController.DoWebSocketAsync();
                 _isConnected = true;
 
                 CmbHttpEndPoints.Enabled = true;
@@ -65,10 +67,11 @@ namespace UserInterface
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if(_isConnected) 
-            { 
+            if (_isConnected)
+            {
                 _raspiApiController.CleanUp();
             }
+            IsClosed = true;
         }
 
         private async void cmbHttpEndPoints_SelectionChangeCommitted(object sender, EventArgs e)
@@ -79,9 +82,9 @@ namespace UserInterface
                 var httpEndPoint = CmbHttpEndPoints.SelectedItem as HttpEndPoint;
                 var response = await _raspiApiController.CallApiAsync(httpEndPoint!);
 
-                if (response is TemperatureInfoObject temperatureInfoObject) 
+                if (response is TemperatureInfoObject temperatureInfoObject)
                 {
-                    
+
                 }
 
                 if (response is CPUInfoObject cpuInfoObject)
@@ -94,18 +97,23 @@ namespace UserInterface
 
                 }
 
-                if(response is SystemInfoObject systemInfoObject)
+                if (response is SystemInfoObject systemInfoObject)
                 {
 
                 }
 
-                if(response is GpioObject[] gpioObjects)
+                if (response is GpioObject[] gpioObjects)
                 {
 
                 }
 
                 CmbHttpEndPoints.Enabled = true;
             }
+        }
+
+        internal void UpdateGpiosCallback(List<GpioObject> gpioObjectList)
+        {
+            
         }
     }
 }

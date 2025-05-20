@@ -2,6 +2,13 @@
 using Models;
 using RaspiDashboard.Interfaces;
 using System.Net.Http.Json;
+using System.Net.WebSockets;
+using System.Text.Json.Nodes;
+using System.Text.Json;
+using System.Text;
+using UserInterface;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net.Sockets;
 
 
 namespace RaspiDashboard.Controllers
@@ -15,7 +22,11 @@ namespace RaspiDashboard.Controllers
         private readonly HttpClient _httpClient;
         private readonly string? _startEndPoint;
 
+
         public string? GitSemVer { get; set; }
+
+        private Uri? _webSocketUri;
+        
 
         public RaspiApiController(IConfiguration config, IServiceProvider serviceProvider, IHttpClientFactory httpClientfactory)
         {
@@ -26,7 +37,6 @@ namespace RaspiDashboard.Controllers
             _gpioObjects = _config.GetSection("Gpios").Get<GpioObject[]>()!;
 
         }
-
 
         public async Task<HttpEndPoint[]> GetEndPointsAsync()
         {
@@ -105,6 +115,7 @@ namespace RaspiDashboard.Controllers
                 HttpResponseMessage response = _httpClient!.PutAsync(_config["GpioLow"], gpioContent).Result;
                 response.EnsureSuccessStatusCode();
                 _gpioObjects = response.Content.ReadFromJsonAsync<GpioObject[]>().Result;
+               
                 return _gpioObjects!;
             }
             catch (Exception ex)
@@ -115,6 +126,48 @@ namespace RaspiDashboard.Controllers
                     MessageBox.Show(ex.Message, "Error");
 
                 return null;
+            }
+        }
+
+        public async Task DoWebSocketAsync()
+        {
+            string portNumber = _config["PortNumber"]!;
+            string hostName = _config["HostName"]!;
+            string gpioStatusEndPoint = _config["GpioStatus"]!;
+
+            using ClientWebSocket ws = new();
+            if (Uri.TryCreate($"ws://{hostName}:{portNumber}/{gpioStatusEndPoint}", UriKind.Absolute, out Uri? uri))
+            {
+                _webSocketUri = uri;
+               
+                string authUser = _config["AuthUser"]!;
+               
+                ws.Options.SetRequestHeader("AUTHORIZED_USER", authUser);
+
+                await ws.ConnectAsync(uri, CancellationToken.None);
+
+                var mainForm = _serviceProvider!.GetRequiredService<MainForm>();
+
+                while (true)
+                {
+                    var receiveBytes = new byte[4 * 1000];
+                    var result = await ws.ReceiveAsync(receiveBytes, default);
+                    string strRes = Encoding.UTF8.GetString([.. receiveBytes.TakeWhile((v, index) => receiveBytes.Skip(index).Any(w => w != 0x00))]);
+                    List<GpioObject> gpioObjectList = JsonSerializer.Deserialize<List<GpioObject>>(strRes)!;
+                    mainForm.UpdateGpiosCallback(gpioObjectList);
+
+                    var sendBytes = new byte[2];
+                    await ws.SendAsync(sendBytes, WebSocketMessageType.Text, true, default);
+
+                    if (mainForm!.IsClosed)
+                    {
+                        Thread.Sleep(1000);
+                        await ws.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "Closing Client", CancellationToken.None);
+                        Thread.Sleep(1000);
+                        await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
+                        break;
+                    }
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Models;
+using UserInterface;
 
 namespace RaspiDashboard.Interfaces
 {
@@ -9,5 +10,6 @@ namespace RaspiDashboard.Interfaces
         Task<dynamic?> CallApiAsync(HttpEndPoint endPoint);
         GpioObject[]? CleanUp();
         Task<HttpEndPoint[]> GetEndPointsAsync();
+        Task DoWebSocketAsync();
     }
 }
