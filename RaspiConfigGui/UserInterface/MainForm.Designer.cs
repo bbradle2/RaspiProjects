@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             MainPanel = new Panel();
+            TextGpioStatus = new TextBox();
             CmbHttpEndPoints = new ComboBox();
             MainPanel.SuspendLayout();
             SuspendLayout();
@@ -36,12 +37,23 @@
             // MainPanel
             // 
             MainPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            MainPanel.Controls.Add(TextGpioStatus);
             MainPanel.Controls.Add(CmbHttpEndPoints);
             MainPanel.Dock = DockStyle.Fill;
             MainPanel.Location = new Point(0, 0);
             MainPanel.Name = "MainPanel";
-            MainPanel.Size = new Size(810, 390);
+            MainPanel.Size = new Size(957, 390);
             MainPanel.TabIndex = 0;
+            // 
+            // TextGpioStatus
+            // 
+            TextGpioStatus.Location = new Point(12, 37);
+            TextGpioStatus.Multiline = true;
+            TextGpioStatus.Name = "TextGpioStatus";
+            TextGpioStatus.ReadOnly = true;
+            TextGpioStatus.ScrollBars = ScrollBars.Vertical;
+            TextGpioStatus.Size = new Size(933, 341);
+            TextGpioStatus.TabIndex = 4;
             // 
             // CmbHttpEndPoints
             // 
@@ -57,7 +69,7 @@
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(810, 390);
+            ClientSize = new Size(957, 390);
             Controls.Add(MainPanel);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -66,6 +78,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             FormClosed += MainForm_FormClosed;
             MainPanel.ResumeLayout(false);
+            MainPanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -73,5 +86,6 @@
 
         private Panel MainPanel;
         private ComboBox CmbHttpEndPoints;
+        private TextBox TextGpioStatus;
     }
 }

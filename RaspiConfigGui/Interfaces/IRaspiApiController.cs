@@ -8,8 +8,8 @@ namespace RaspiDashboard.Interfaces
         string? GitSemVer { get; set; }
 
         Task<dynamic?> CallApiAsync(HttpEndPoint endPoint);
-        GpioObject[]? CleanUp();
+        //GpioObject[]? CleanUp();
         Task<HttpEndPoint[]> GetEndPointsAsync();
-        Task DoWebSocketAsync();
+        Task RunWebSocketAsync();
     }
 }

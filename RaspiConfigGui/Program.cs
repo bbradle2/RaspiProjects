@@ -16,8 +16,8 @@ namespace RaspiDashboard
         {
             
             ApplicationConfiguration.Initialize(); 
-            var host = CreateHostBuilder().Build();
 
+            var host = CreateHostBuilder().Build();
             await host.StartAsync();
            
             IHostApplicationLifetime lifetime =
@@ -26,15 +26,12 @@ namespace RaspiDashboard
             var mainForm = host.Services.GetRequiredService<MainForm>();
             Application.Run(mainForm);
 
-
             lifetime.StopApplication();
             await host.WaitForShutdownAsync();
-
         }
 
         static IHostBuilder CreateHostBuilder()
         {
-            
             return Host.CreateDefaultBuilder().ConfigureServices((context, services) => 
             {
                 services.AddSingleton<MainForm>();
@@ -64,9 +61,6 @@ namespace RaspiDashboard
                     c.DefaultRequestHeaders.Add("AUTHORIZED_USER", authUser);
 
                 });
-
-                
-                  
             });
         }
     }

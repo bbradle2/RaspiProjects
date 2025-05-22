@@ -107,29 +107,8 @@ namespace RaspiDashboard.Controllers
 
         }
 
-        public GpioObject[]? CleanUp()
-        {
-            try
-            {
-                using JsonContent gpioContent = JsonContent.Create(_gpioObjects);
-                HttpResponseMessage response = _httpClient!.PutAsync(_config["GpioLow"], gpioContent).Result;
-                response.EnsureSuccessStatusCode();
-                _gpioObjects = response.Content.ReadFromJsonAsync<GpioObject[]>().Result;
-               
-                return _gpioObjects!;
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException != null)
-                    MessageBox.Show(ex.InnerException.Message, "Error");
-                else
-                    MessageBox.Show(ex.Message, "Error");
 
-                return null;
-            }
-        }
-
-        public async Task DoWebSocketAsync()
+        public async Task RunWebSocketAsync()
         {
             string portNumber = _config["PortNumber"]!;
             string hostName = _config["HostName"]!;
@@ -154,19 +133,20 @@ namespace RaspiDashboard.Controllers
                     var result = await ws.ReceiveAsync(receiveBytes, default);
                     string strRes = Encoding.UTF8.GetString([.. receiveBytes.TakeWhile((v, index) => receiveBytes.Skip(index).Any(w => w != 0x00))]);
                     List<GpioObject> gpioObjectList = JsonSerializer.Deserialize<List<GpioObject>>(strRes)!;
-                    mainForm.UpdateGpiosCallback(gpioObjectList);
+                    await mainForm.UpdateGpiosEventHandler(gpioObjectList);
 
-                    var sendBytes = new byte[2];
-                    await ws.SendAsync(sendBytes, WebSocketMessageType.Text, true, default);
+                    var sendBytes = new byte[1];
+                    sendBytes[0] = 0x04;
+
+                    await ws.SendAsync(sendBytes, WebSocketMessageType.Binary, true, default);
 
                     if (mainForm!.IsClosed)
                     {
-                        Thread.Sleep(1000);
-                        await ws.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "Closing Client", CancellationToken.None);
-                        Thread.Sleep(1000);
+                        await ws.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "Closing Output", CancellationToken.None);
                         await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
                         break;
                     }
+
                 }
             }
         }

@@ -11,8 +11,8 @@ namespace UserInterface
         private readonly IRaspiApiController _raspiApiController;
         private readonly IConfiguration _config;
         private readonly IServiceProvider _serviceProvider;
-        private bool _isConnected = false;
-        public bool IsClosed = false;
+        private volatile bool _isConnected = false;
+        public volatile bool IsClosed = false;
 
         public MainForm(IConfiguration config, IServiceProvider serviceProvider, IRaspiApiController raspiApiController)
         {
@@ -38,13 +38,13 @@ namespace UserInterface
                 CmbHttpEndPoints.DataSource = httpEndPointArray;
                 CmbHttpEndPoints.ValueMember = "HttpMethod";
                 CmbHttpEndPoints.DisplayMember = "HttpCallEndPoint";
-                CmbHttpEndPoints.SelectedItem = httpEndPointArray!
-                    .Where(s => s.HttpCallEndPoint == _config["GpioHigh"])
-                    .First();
+                //CmbHttpEndPoints.SelectedItem = httpEndPointArray!
+                //    .Where(s => s.HttpCallEndPoint == _config["GpioHigh"])
+                //    .First();
 
+                CmbHttpEndPoints.SelectedItem = null;
                 var selectedItem = CmbHttpEndPoints.SelectedItem as HttpEndPoint;
-                await _raspiApiController.CallApiAsync(selectedItem!);
-                _ = _raspiApiController.DoWebSocketAsync();
+                _ = _raspiApiController.RunWebSocketAsync();
                 _isConnected = true;
 
                 CmbHttpEndPoints.Enabled = true;
@@ -67,10 +67,6 @@ namespace UserInterface
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (_isConnected)
-            {
-                _raspiApiController.CleanUp();
-            }
             IsClosed = true;
         }
 
@@ -110,10 +106,21 @@ namespace UserInterface
                 CmbHttpEndPoints.Enabled = true;
             }
         }
-
-        internal void UpdateGpiosCallback(List<GpioObject> gpioObjectList)
+         
+        public async Task UpdateGpiosEventHandler(IList<GpioObject> gpioObjectList)
         {
-            
+            if (!IsDisposed && IsHandleCreated && !IsClosed)
+            { 
+                foreach (GpioObject gpioObject in gpioObjectList)
+                {
+                    await InvokeAsync(() => TextGpioStatus.AppendText($"Gpio Number={gpioObject.GpioNumber}:Gpio Value={gpioObject.GpioValue},"));
+                }
+
+                if(gpioObjectList.Count > 0) await InvokeAsync(() => TextGpioStatus.AppendText(Environment.NewLine)); 
+               
+                if (TextGpioStatus.Text == "") await InvokeAsync(() => TextGpioStatus.AppendText("No Gpios are Open" + Environment.NewLine));
+
+            }
         }
     }
 }
