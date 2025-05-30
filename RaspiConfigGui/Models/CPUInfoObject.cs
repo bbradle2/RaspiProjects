@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using RaspiDashboard.Models;
+
+namespace Models
 {
     public class CPUInfoObject : BaseInfoObject
     {

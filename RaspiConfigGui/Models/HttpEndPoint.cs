@@ -1,8 +1,10 @@
-﻿namespace Models
+﻿using System.Text.Json.Serialization;
+
+namespace RaspiDashboard.Models
 {
     public class HttpEndPoint
     {
-     public required string HttpMethod { get; set; }
-     public required string HttpCallEndPoint { get; set; }
+        public string? HttpMethod { get; set; }
+        public string? HttpCallEndPoint { get; set; }
     }
 }

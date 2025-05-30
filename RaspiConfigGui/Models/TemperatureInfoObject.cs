@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Models
+﻿namespace RaspiDashboard.Models
 {
     public class TemperatureInfoObject : BaseInfoObject
     {

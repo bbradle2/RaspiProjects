@@ -1,5 +1,4 @@
-﻿
-namespace Models
+﻿namespace RaspiDashboard.Models
 {
     public class SystemInfoObject : BaseInfoObject
     {

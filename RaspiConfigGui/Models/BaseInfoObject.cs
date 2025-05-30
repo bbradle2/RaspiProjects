@@ -1,4 +1,4 @@
-﻿namespace Models
+﻿namespace RaspiDashboard.Models
 {
     public abstract class BaseInfoObject
     {

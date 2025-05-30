@@ -1,7 +1,8 @@
-﻿namespace Models
+﻿namespace RaspiDashboard.Models
 {
     public class GpioObject
     {
+
         public int GpioNumber { get; set; }
         public bool? GpioValue { get; set; }
     }

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RaspiDashboard": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false
+    }
+  }
+}
