@@ -2,7 +2,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RaspiDashboard.Controllers;
-using RaspiDashboard.Interfaces;
 using RaspiDashboard.Models;
 using System.Collections.Concurrent;
 using System.Diagnostics;
@@ -16,7 +15,8 @@ namespace RaspiDashboard
         [STAThread]
         static async Task Main()
         {
-            ApplicationConfiguration.Initialize(); 
+            ApplicationConfiguration.Initialize();
+            
 
             var host = CreateHostBuilder().Build();
             await host.StartAsync();
