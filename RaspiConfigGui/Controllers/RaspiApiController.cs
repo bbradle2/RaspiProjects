@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Models;
+using RaspiDashboard.Models;
 using RaspiDashboard.Constants;
 using RaspiDashboard.Interfaces;
-using RaspiDashboard.Models;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Net.Http.Json;
@@ -73,9 +72,9 @@ namespace RaspiDashboard.Controllers
             _gpioObjectsQueue = gpioObjectsQueue;
 
             var gpios = _config.GetSection("Gpios").Get<GpioObject[]>()!;
-            foreach (var gp in gpios) 
+            foreach (var gp in gpios)
             {
-                _gpioObjectsQueue!.Enqueue(gp);
+                gpioObjectsQueue!.Enqueue(gp);
             }
         }
 
@@ -132,13 +131,13 @@ namespace RaspiDashboard.Controllers
                     return await response.Content.ReadFromJsonAsync<MemoryInfoObject>();
                 }
 
-                MessageBox.Show("Invalid EndPoint", "Error");
+                Debug.WriteLine("Invalid EndPoint");
                 return null;
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error");
+                Debug.WriteLine(ex.Message, "Error");
                 return null;
             }
 
@@ -178,7 +177,7 @@ namespace RaspiDashboard.Controllers
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error");
+                Debug.WriteLine(ex.Message, "Warning");
                 return null;
             }
         }
@@ -230,7 +229,7 @@ namespace RaspiDashboard.Controllers
             }
             catch (Exception ex) 
             { 
-                Debug.WriteLine(ex);
+                Debug.WriteLine(ex, "Error");
             }
         }
 

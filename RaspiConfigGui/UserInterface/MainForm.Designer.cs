@@ -69,7 +69,7 @@
             MainPanel.Location = new Point(0, 0);
             MainPanel.Margin = new Padding(4);
             MainPanel.Name = "MainPanel";
-            MainPanel.Size = new Size(842, 292);
+            MainPanel.Size = new Size(1060, 292);
             MainPanel.TabIndex = 0;
             // 
             // DataGridViewMemoryInfo
@@ -106,7 +106,7 @@
             dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             DataGridViewMemoryInfo.DefaultCellStyle = dataGridViewCellStyle3;
-            DataGridViewMemoryInfo.Location = new Point(127, 131);
+            DataGridViewMemoryInfo.Location = new Point(169, 131);
             DataGridViewMemoryInfo.MultiSelect = false;
             DataGridViewMemoryInfo.Name = "DataGridViewMemoryInfo";
             DataGridViewMemoryInfo.ReadOnly = true;
@@ -125,7 +125,7 @@
             DataGridViewMemoryInfo.RowsDefaultCellStyle = dataGridViewCellStyle5;
             DataGridViewMemoryInfo.SelectionMode = DataGridViewSelectionMode.CellSelect;
             DataGridViewMemoryInfo.ShowEditingIcon = false;
-            DataGridViewMemoryInfo.Size = new Size(703, 87);
+            DataGridViewMemoryInfo.Size = new Size(879, 87);
             DataGridViewMemoryInfo.StandardTab = true;
             DataGridViewMemoryInfo.TabIndex = 8;
             DataGridViewMemoryInfo.VirtualMode = true;
@@ -153,10 +153,10 @@
             GroupBoxTemperatureInfo.Controls.Add(LabelTempFarenh);
             GroupBoxTemperatureInfo.Controls.Add(LabelTemperatureCel);
             GroupBoxTemperatureInfo.FlatStyle = FlatStyle.Flat;
-            GroupBoxTemperatureInfo.Location = new Point(127, 47);
+            GroupBoxTemperatureInfo.Location = new Point(169, 47);
             GroupBoxTemperatureInfo.Margin = new Padding(4);
             GroupBoxTemperatureInfo.Name = "GroupBoxTemperatureInfo";
-            GroupBoxTemperatureInfo.Size = new Size(211, 77);
+            GroupBoxTemperatureInfo.Size = new Size(214, 77);
             GroupBoxTemperatureInfo.TabIndex = 6;
             GroupBoxTemperatureInfo.TabStop = false;
             GroupBoxTemperatureInfo.Text = "Temperature Information";
@@ -164,7 +164,7 @@
             // TextBoxTempCelcius
             // 
             TextBoxTempCelcius.BorderStyle = BorderStyle.None;
-            TextBoxTempCelcius.Location = new Point(143, 49);
+            TextBoxTempCelcius.Location = new Point(115, 50);
             TextBoxTempCelcius.Name = "TextBoxTempCelcius";
             TextBoxTempCelcius.ReadOnly = true;
             TextBoxTempCelcius.ShortcutsEnabled = false;
@@ -175,7 +175,7 @@
             // TextBoxTempFarenh
             // 
             TextBoxTempFarenh.BorderStyle = BorderStyle.None;
-            TextBoxTempFarenh.Location = new Point(143, 28);
+            TextBoxTempFarenh.Location = new Point(115, 28);
             TextBoxTempFarenh.Name = "TextBoxTempFarenh";
             TextBoxTempFarenh.ReadOnly = true;
             TextBoxTempFarenh.ShortcutsEnabled = false;
@@ -213,7 +213,7 @@
             GroupBoxLed.Location = new Point(13, 46);
             GroupBoxLed.Margin = new Padding(4);
             GroupBoxLed.Name = "GroupBoxLed";
-            GroupBoxLed.Size = new Size(106, 219);
+            GroupBoxLed.Size = new Size(148, 219);
             GroupBoxLed.TabIndex = 5;
             GroupBoxLed.TabStop = false;
             GroupBoxLed.Tag = "";
@@ -227,7 +227,7 @@
             RadioButtonLedStatus27.Location = new Point(4, 179);
             RadioButtonLedStatus27.Margin = new Padding(4);
             RadioButtonLedStatus27.Name = "RadioButtonLedStatus27";
-            RadioButtonLedStatus27.Size = new Size(95, 33);
+            RadioButtonLedStatus27.Size = new Size(137, 33);
             RadioButtonLedStatus27.TabIndex = 8;
             RadioButtonLedStatus27.Tag = "27";
             RadioButtonLedStatus27.TextAlign = ContentAlignment.MiddleCenter;
@@ -241,7 +241,7 @@
             RadioButtonLedStatus26.Location = new Point(4, 139);
             RadioButtonLedStatus26.Margin = new Padding(4);
             RadioButtonLedStatus26.Name = "RadioButtonLedStatus26";
-            RadioButtonLedStatus26.Size = new Size(95, 33);
+            RadioButtonLedStatus26.Size = new Size(137, 33);
             RadioButtonLedStatus26.TabIndex = 7;
             RadioButtonLedStatus26.Tag = "26";
             RadioButtonLedStatus26.TextAlign = ContentAlignment.MiddleCenter;
@@ -255,7 +255,7 @@
             RadioButtonLedStatus25.Location = new Point(4, 98);
             RadioButtonLedStatus25.Margin = new Padding(4);
             RadioButtonLedStatus25.Name = "RadioButtonLedStatus25";
-            RadioButtonLedStatus25.Size = new Size(95, 33);
+            RadioButtonLedStatus25.Size = new Size(137, 33);
             RadioButtonLedStatus25.TabIndex = 6;
             RadioButtonLedStatus25.Tag = "25";
             RadioButtonLedStatus25.TextAlign = ContentAlignment.MiddleCenter;
@@ -269,7 +269,7 @@
             RadioButtonLedStatus24.Location = new Point(4, 57);
             RadioButtonLedStatus24.Margin = new Padding(4);
             RadioButtonLedStatus24.Name = "RadioButtonLedStatus24";
-            RadioButtonLedStatus24.Size = new Size(95, 33);
+            RadioButtonLedStatus24.Size = new Size(137, 33);
             RadioButtonLedStatus24.TabIndex = 5;
             RadioButtonLedStatus24.Tag = "24";
             RadioButtonLedStatus24.TextAlign = ContentAlignment.MiddleCenter;
@@ -283,7 +283,7 @@
             RadioButtonLedStatus23.Location = new Point(4, 17);
             RadioButtonLedStatus23.Margin = new Padding(4);
             RadioButtonLedStatus23.Name = "RadioButtonLedStatus23";
-            RadioButtonLedStatus23.Size = new Size(95, 33);
+            RadioButtonLedStatus23.Size = new Size(137, 33);
             RadioButtonLedStatus23.TabIndex = 4;
             RadioButtonLedStatus23.Tag = "23";
             RadioButtonLedStatus23.TextAlign = ContentAlignment.MiddleCenter;
@@ -310,7 +310,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(842, 292);
+            ClientSize = new Size(1060, 292);
             Controls.Add(MainPanel);
             Font = new Font("Microsoft Sans Serif", 10F);
             FormBorderStyle = FormBorderStyle.FixedSingle;

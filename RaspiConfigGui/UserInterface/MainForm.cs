@@ -1,14 +1,12 @@
 using Microsoft.Extensions.Configuration;
-using Models;
 using RaspiDashboard.Controllers;
 using RaspiDashboard.Interfaces;
 using RaspiDashboard.Models;
-using System;
 using System.Collections.Concurrent;
 using System.Data;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Windows.Forms;
+using System.Security.Cryptography;
+
 
 
 namespace UserInterface
@@ -38,6 +36,7 @@ namespace UserInterface
         {
             try
             {
+                Log($"Info : Starting", EventLogEntryType.Information);
                 ComboBoxHttpEndPoints.Enabled = false;
 
                 Text = "Loading Endpoints.....";
@@ -45,33 +44,38 @@ namespace UserInterface
 
                 _isConnected = true;
 
-                ComboBoxHttpEndPoints.DataSource = endpoints.Where(s => s.HttpMethod == "PUT").ToList();
-                ComboBoxHttpEndPoints.ValueMember = "HttpMethod";
-                ComboBoxHttpEndPoints.DisplayMember = "HttpCallEndPoint";
-                ComboBoxHttpEndPoints.SelectedItem = null;
-                ComboBoxHttpEndPoints.Enabled = true;
+                await InvokeAsync(() => ComboBoxHttpEndPoints.DataSource = endpoints.Where(s => s.HttpMethod == "PUT").ToList());
+                await InvokeAsync(() => ComboBoxHttpEndPoints.ValueMember = "HttpMethod");
+                await InvokeAsync(() => ComboBoxHttpEndPoints.DisplayMember = "HttpCallEndPoint");
+                await InvokeAsync(() => ComboBoxHttpEndPoints.SelectedItem = null);
+                await InvokeAsync(() => ComboBoxHttpEndPoints.Enabled = true);
 
                 _raspiApiController.OnGpioEvent += RaspiApiController_OnGpioEvent;
                 _ = _raspiApiController.GetGpioStatusAsync();
 
-                TimeUpdateForm.Interval = 1;
-                TimeUpdateForm.Enabled = true;
-                TimeUpdateForm.Start();
+                await InvokeAsync(() => TimeUpdateForm.Interval = 1);
+                await InvokeAsync(() => TimeUpdateForm.Enabled = true);
+                await InvokeAsync(() => TimeUpdateForm.Start());
                 await Task.Delay(10);
-                TimeUpdateForm.Stop();
+                await InvokeAsync(() => TimeUpdateForm.Stop());
 
-                TimeUpdateForm.Enabled = false;
-                TimeUpdateForm.Interval = 4000;
-                TimeUpdateForm.Enabled = true;
-                TimeUpdateForm.Start();
+
+                await InvokeAsync(() => TimeUpdateForm.Enabled = false);
+                await InvokeAsync(() => TimeUpdateForm.Interval = 10000);
+                await InvokeAsync(() => TimeUpdateForm.Enabled = true);
+                await InvokeAsync(() => TimeUpdateForm.Start());
+
+                Log($"Info : Start Complete ", EventLogEntryType.Information);
 
             }
             catch (Exception ex)
             {
-                Text = "Could not connect......";
-                ComboBoxHttpEndPoints.Enabled = false;
+                Log($"Error : {ex.Message}", EventLogEntryType.Error);
+                await InvokeAsync(() => Text = "Could not connect......");
+                await InvokeAsync(() => ComboBoxHttpEndPoints.Enabled = false);
                 _isConnected = false;
-                MessageBox.Show(this, ex.Message, "Error");
+                await InvokeAsync(() => MessageBox.Show(this, ex.Message, "Error"));
+                
                 Close();
             }
             finally
@@ -82,8 +86,26 @@ namespace UserInterface
             return;
         }
 
+        public static void Log(string message, EventLogEntryType eventType)
+        {
+            var source = "RaspiDashboard";
+            if (!EventLog.SourceExists(source))
+            {
+                EventLog.CreateEventSource(source, "RaspiApiGui");
+                return;
+            }
+
+
+            EventLog.WriteEntry(
+                            source,
+                            message,
+                            eventType,
+                            6001);
+        }
+
         private async Task UpdateTemperatureInfo(TemperatureInfoObject? temperatureInfoObject)
         {
+           
             if (!IsDisposed && IsHandleCreated && _raspiApiController.IsClosed == 0)
             {
                 if (temperatureInfoObject is not null)
@@ -139,31 +161,40 @@ namespace UserInterface
                         memoryInfoObject,
                     };
 
-                    DataGridViewMemoryInfo.DataSource = dataSource;
-                    DataGridViewMemoryInfo.Columns.Remove("ProductName");
-                    DataGridViewMemoryInfo.Columns.Remove("Description");
-                    DataGridViewMemoryInfo.Columns["MemoryTotal"]!.HeaderText = "Memory Total";
-                    DataGridViewMemoryInfo.Columns["MemoryFree"]!.HeaderText = "Memory Free";
-                    DataGridViewMemoryInfo.Columns["MemoryAvailable"]!.HeaderText = "Memory Available";
-                    DataGridViewMemoryInfo.Columns["Cached"]!.HeaderText = "Cached";
-                    DataGridViewMemoryInfo.Columns["SwapCached"]!.HeaderText = "Swap Cached";
-                    DataGridViewMemoryInfo.Columns["SwapFree"]!.HeaderText = "Swap Free";
-                    DataGridViewMemoryInfo.AllowUserToResizeColumns = true;
-                    DataGridViewMemoryInfo.ColumnHeadersDefaultCellStyle.BackColor = Control.DefaultBackColor;
-                    DataGridViewMemoryInfo.RowsDefaultCellStyle.BackColor = Control.DefaultBackColor;
-                    DataGridViewMemoryInfo.EnableHeadersVisualStyles = false;
+                    if(dataSource.Count == 1) 
+                    { 
+                        await InvokeAsync(() => Text = ((MemoryInfoObject)dataSource.Current!).ProductName);
+                    }
+                    else                           
+                    { 
+                        await InvokeAsync(() => Text = "Problem Getting Memory Info");
+                    }
+                                                                                
+                    var suffix = "(GiB)";
+                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.DataSource = dataSource);
+                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.Columns.Remove("ProductName"));
+                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.Columns.Remove("Description"));
+                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.Columns["MemoryTotal"]!.HeaderText = "Memory Total" + suffix);
+                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.Columns["MemoryFree"]!.HeaderText = "Memory Free" + suffix);
+                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.Columns["MemoryAvailable"]!.HeaderText = "Memory Available" + suffix);
+                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.Columns["Cached"]!.HeaderText = "Cached" + suffix);
+                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.Columns["SwapCached"]!.HeaderText = "Swap Cached" + suffix);
+                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.Columns["SwapFree"]!.HeaderText = "Swap Free" + suffix);
+                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.AllowUserToResizeColumns = true);
+                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.ColumnHeadersDefaultCellStyle.BackColor = Control.DefaultBackColor);
+                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.RowsDefaultCellStyle.BackColor = Control.DefaultBackColor);
+                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.EnableHeadersVisualStyles = false);
+                    
                 }
             }
-
-            await Task.FromResult(0);
         }
 
         private async void CmbHttpEndPoints_SelectionChangeCommitted(object? sender, EventArgs? e)
         {
             if (_isConnected)
             {
-                ComboBoxHttpEndPoints.Enabled = false;
-                var httpEndPoint = ComboBoxHttpEndPoints.SelectedItem as HttpEndPoint;
+                await InvokeAsync(() => ComboBoxHttpEndPoints.Enabled = false);
+                var httpEndPoint = await InvokeAsync(() => ComboBoxHttpEndPoints.SelectedItem as HttpEndPoint);
 
                 if (httpEndPoint!.HttpMethod!.Equals("PUT"))
                 {
@@ -174,7 +205,7 @@ namespace UserInterface
                     }
                 }
 
-                ComboBoxHttpEndPoints.Enabled = true;
+                await InvokeAsync(() => ComboBoxHttpEndPoints.Enabled = true);
             }
         }
 
@@ -215,13 +246,13 @@ namespace UserInterface
                     else
                     {
                         await radioButton.InvokeAsync(() => radioButton.BackColor = Color.Yellow);
-                        await radioButton.InvokeAsync(() => radioButton.Text = "Gpio " + radioButton.Tag + " NOP");
+                        await radioButton.InvokeAsync(() => radioButton.Text = "Gpio " + radioButton.Tag + " Not Open");
                     }
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                Log($"Error : {ex.Message}", EventLogEntryType.Error);
             }
         }
 
@@ -237,6 +268,15 @@ namespace UserInterface
                         CancellationToken = CancellationToken.None,
                     };
 
+                    if (gpioObjectsQueue?.Count == 0)
+                    {
+                        var gpios = _config.GetSection("Gpios").Get<GpioObject[]>()!;
+                        foreach (var gp in gpios)
+                        {
+                            gpioObjectsQueue!.Enqueue(gp);
+                        }
+                    }
+                  
                     Parallel.ForEachAsync(gpioObjectsQueue!, options, async (gpioObject, _) =>
                     {
                         if (GroupBoxLed is null && !GroupBoxLed!.IsHandleCreated && !GroupBoxLed!.IsDisposed) { return; }
@@ -257,7 +297,7 @@ namespace UserInterface
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                Log($"Error : {ex.Message}", EventLogEntryType.Error);
             }
         }
 
@@ -299,7 +339,7 @@ namespace UserInterface
                 Thread thread = new(() => Clipboard.SetDataObject(val!, true));
                 thread.SetApartmentState(ApartmentState.STA);
                 thread.Start();
-                thread.Join(); //Wait for the thread to end
+                thread.Join(); 
 
             }
         }
@@ -322,7 +362,7 @@ namespace UserInterface
                 Thread thread = new(() => Clipboard.SetDataObject(val!, true));
                 thread.SetApartmentState(ApartmentState.STA);
                 thread.Start();
-                thread.Join(); //Wait for the thread to end
+                thread.Join(); 
 
             }
         }

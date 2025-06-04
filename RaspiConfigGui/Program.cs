@@ -36,7 +36,7 @@ namespace RaspiDashboard
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            Debug.WriteLine(e.ToString());
+            Debug.WriteLine(e.ToString(), "Error");
         }
 
         static IHostBuilder CreateHostBuilder()
