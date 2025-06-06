@@ -2,7 +2,7 @@
 {
     public class TemperatureInfoObject : BaseInfoObject
     {
-        public double TemperatureFahrenheit { get; set; }
-        public double TemperatureCelcius { get; set; }
+        public decimal TemperatureFahrenheit { get; set; }
+        public decimal TemperatureCelcius { get; set; }
     }
 }

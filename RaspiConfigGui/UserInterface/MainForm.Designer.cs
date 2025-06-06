@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             MainPanel = new Panel();
+            LableGpioActions = new Label();
+            GroupBoxMemoryInfo = new GroupBox();
             DataGridViewMemoryInfo = new DataGridView();
             ContextMenuStripDataGrid = new ContextMenuStrip(components);
             copyToolStripMenuItem = new ToolStripMenuItem();
@@ -43,34 +45,59 @@
             TextBoxTempFarenh = new TextBox();
             LabelTempFarenh = new Label();
             LabelTemperatureCel = new Label();
-            GroupBoxLed = new GroupBox();
-            RadioButtonLedStatus27 = new RadioButton();
-            RadioButtonLedStatus26 = new RadioButton();
-            RadioButtonLedStatus25 = new RadioButton();
-            RadioButtonLedStatus24 = new RadioButton();
-            RadioButtonLedStatus23 = new RadioButton();
+            GroupBoxGpioStatus = new GroupBox();
+            RadioButtonGpioStatus27 = new RadioButton();
+            RadioButtonGpioStatus26 = new RadioButton();
+            RadioButtonGpioStatus25 = new RadioButton();
+            RadioButtonGpioStatus24 = new RadioButton();
+            RadioButtonGpioStatus23 = new RadioButton();
             ComboBoxHttpEndPoints = new ComboBox();
             TimeUpdateForm = new System.Windows.Forms.Timer(components);
             MainPanel.SuspendLayout();
+            GroupBoxMemoryInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewMemoryInfo).BeginInit();
             ContextMenuStripDataGrid.SuspendLayout();
             GroupBoxTemperatureInfo.SuspendLayout();
-            GroupBoxLed.SuspendLayout();
+            GroupBoxGpioStatus.SuspendLayout();
             SuspendLayout();
             // 
             // MainPanel
             // 
             MainPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            MainPanel.Controls.Add(DataGridViewMemoryInfo);
+            MainPanel.Controls.Add(LableGpioActions);
+            MainPanel.Controls.Add(GroupBoxMemoryInfo);
             MainPanel.Controls.Add(GroupBoxTemperatureInfo);
-            MainPanel.Controls.Add(GroupBoxLed);
+            MainPanel.Controls.Add(GroupBoxGpioStatus);
             MainPanel.Controls.Add(ComboBoxHttpEndPoints);
             MainPanel.Dock = DockStyle.Fill;
             MainPanel.Location = new Point(0, 0);
             MainPanel.Margin = new Padding(4);
             MainPanel.Name = "MainPanel";
-            MainPanel.Size = new Size(1060, 292);
+            MainPanel.Size = new Size(1130, 310);
             MainPanel.TabIndex = 0;
+            // 
+            // LableGpioActions
+            // 
+            LableGpioActions.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            LableGpioActions.Location = new Point(21, 14);
+            LableGpioActions.Margin = new Padding(4, 0, 4, 0);
+            LableGpioActions.Name = "LableGpioActions";
+            LableGpioActions.Size = new Size(104, 16);
+            LableGpioActions.TabIndex = 10;
+            LableGpioActions.Text = "Gpio Actions";
+            // 
+            // GroupBoxMemoryInfo
+            // 
+            GroupBoxMemoryInfo.Controls.Add(DataGridViewMemoryInfo);
+            GroupBoxMemoryInfo.FlatStyle = FlatStyle.Flat;
+            GroupBoxMemoryInfo.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            GroupBoxMemoryInfo.Location = new Point(175, 147);
+            GroupBoxMemoryInfo.Margin = new Padding(4);
+            GroupBoxMemoryInfo.Name = "GroupBoxMemoryInfo";
+            GroupBoxMemoryInfo.Size = new Size(942, 150);
+            GroupBoxMemoryInfo.TabIndex = 9;
+            GroupBoxMemoryInfo.TabStop = false;
+            GroupBoxMemoryInfo.Text = "Memory Information";
             // 
             // DataGridViewMemoryInfo
             // 
@@ -78,54 +105,53 @@
             DataGridViewMemoryInfo.AllowUserToDeleteRows = false;
             DataGridViewMemoryInfo.AllowUserToResizeColumns = false;
             DataGridViewMemoryInfo.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            DataGridViewMemoryInfo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            DataGridViewMemoryInfo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewCellStyle6.BackColor = SystemColors.Control;
+            DataGridViewMemoryInfo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             DataGridViewMemoryInfo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             DataGridViewMemoryInfo.BackgroundColor = SystemColors.Control;
             DataGridViewMemoryInfo.BorderStyle = BorderStyle.None;
             DataGridViewMemoryInfo.CellBorderStyle = DataGridViewCellBorderStyle.None;
             DataGridViewMemoryInfo.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             DataGridViewMemoryInfo.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.ControlLight;
-            dataGridViewCellStyle2.Font = new Font("Microsoft Sans Serif", 10F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            DataGridViewMemoryInfo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = SystemColors.ControlLight;
+            dataGridViewCellStyle7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.False;
+            DataGridViewMemoryInfo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             DataGridViewMemoryInfo.ColumnHeadersHeight = 30;
             DataGridViewMemoryInfo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             DataGridViewMemoryInfo.ContextMenuStrip = ContextMenuStripDataGrid;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 10F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            DataGridViewMemoryInfo.DefaultCellStyle = dataGridViewCellStyle3;
-            DataGridViewMemoryInfo.Location = new Point(169, 131);
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = SystemColors.Control;
+            dataGridViewCellStyle8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            DataGridViewMemoryInfo.DefaultCellStyle = dataGridViewCellStyle8;
+            DataGridViewMemoryInfo.Location = new Point(6, 25);
             DataGridViewMemoryInfo.MultiSelect = false;
             DataGridViewMemoryInfo.Name = "DataGridViewMemoryInfo";
             DataGridViewMemoryInfo.ReadOnly = true;
             DataGridViewMemoryInfo.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Control;
-            dataGridViewCellStyle4.Font = new Font("Microsoft Sans Serif", 10F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.Window;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            DataGridViewMemoryInfo.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = SystemColors.Control;
+            dataGridViewCellStyle9.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle9.ForeColor = SystemColors.Window;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
+            DataGridViewMemoryInfo.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             DataGridViewMemoryInfo.RowHeadersVisible = false;
             DataGridViewMemoryInfo.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(224, 224, 224);
-            DataGridViewMemoryInfo.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle10.BackColor = Color.FromArgb(224, 224, 224);
+            DataGridViewMemoryInfo.RowsDefaultCellStyle = dataGridViewCellStyle10;
             DataGridViewMemoryInfo.SelectionMode = DataGridViewSelectionMode.CellSelect;
             DataGridViewMemoryInfo.ShowEditingIcon = false;
-            DataGridViewMemoryInfo.Size = new Size(879, 87);
+            DataGridViewMemoryInfo.Size = new Size(930, 80);
             DataGridViewMemoryInfo.StandardTab = true;
             DataGridViewMemoryInfo.TabIndex = 8;
             DataGridViewMemoryInfo.VirtualMode = true;
@@ -153,10 +179,11 @@
             GroupBoxTemperatureInfo.Controls.Add(LabelTempFarenh);
             GroupBoxTemperatureInfo.Controls.Add(LabelTemperatureCel);
             GroupBoxTemperatureInfo.FlatStyle = FlatStyle.Flat;
-            GroupBoxTemperatureInfo.Location = new Point(169, 47);
+            GroupBoxTemperatureInfo.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            GroupBoxTemperatureInfo.Location = new Point(175, 66);
             GroupBoxTemperatureInfo.Margin = new Padding(4);
             GroupBoxTemperatureInfo.Name = "GroupBoxTemperatureInfo";
-            GroupBoxTemperatureInfo.Size = new Size(214, 77);
+            GroupBoxTemperatureInfo.Size = new Size(208, 77);
             GroupBoxTemperatureInfo.TabIndex = 6;
             GroupBoxTemperatureInfo.TabStop = false;
             GroupBoxTemperatureInfo.Text = "Temperature Information";
@@ -164,22 +191,24 @@
             // TextBoxTempCelcius
             // 
             TextBoxTempCelcius.BorderStyle = BorderStyle.None;
-            TextBoxTempCelcius.Location = new Point(115, 50);
+            TextBoxTempCelcius.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold);
+            TextBoxTempCelcius.Location = new Point(127, 50);
             TextBoxTempCelcius.Name = "TextBoxTempCelcius";
             TextBoxTempCelcius.ReadOnly = true;
             TextBoxTempCelcius.ShortcutsEnabled = false;
-            TextBoxTempCelcius.Size = new Size(61, 16);
+            TextBoxTempCelcius.Size = new Size(61, 15);
             TextBoxTempCelcius.TabIndex = 3;
             TextBoxTempCelcius.TabStop = false;
             // 
             // TextBoxTempFarenh
             // 
             TextBoxTempFarenh.BorderStyle = BorderStyle.None;
-            TextBoxTempFarenh.Location = new Point(115, 28);
+            TextBoxTempFarenh.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold);
+            TextBoxTempFarenh.Location = new Point(127, 28);
             TextBoxTempFarenh.Name = "TextBoxTempFarenh";
             TextBoxTempFarenh.ReadOnly = true;
             TextBoxTempFarenh.ShortcutsEnabled = false;
-            TextBoxTempFarenh.Size = new Size(61, 16);
+            TextBoxTempFarenh.Size = new Size(61, 15);
             TextBoxTempFarenh.TabIndex = 2;
             TextBoxTempFarenh.TabStop = false;
             // 
@@ -189,7 +218,7 @@
             LabelTempFarenh.Location = new Point(4, 27);
             LabelTempFarenh.Margin = new Padding(4, 0, 4, 0);
             LabelTempFarenh.Name = "LabelTempFarenh";
-            LabelTempFarenh.Size = new Size(110, 17);
+            LabelTempFarenh.Size = new Size(117, 16);
             LabelTempFarenh.TabIndex = 1;
             LabelTempFarenh.Text = "Temperature F :";
             // 
@@ -199,104 +228,106 @@
             LabelTemperatureCel.Location = new Point(4, 49);
             LabelTemperatureCel.Margin = new Padding(4, 0, 4, 0);
             LabelTemperatureCel.Name = "LabelTemperatureCel";
-            LabelTemperatureCel.Size = new Size(111, 17);
+            LabelTemperatureCel.Size = new Size(118, 16);
             LabelTemperatureCel.TabIndex = 0;
             LabelTemperatureCel.Text = "Temperature C :";
             // 
-            // GroupBoxLed
+            // GroupBoxGpioStatus
             // 
-            GroupBoxLed.Controls.Add(RadioButtonLedStatus27);
-            GroupBoxLed.Controls.Add(RadioButtonLedStatus26);
-            GroupBoxLed.Controls.Add(RadioButtonLedStatus25);
-            GroupBoxLed.Controls.Add(RadioButtonLedStatus24);
-            GroupBoxLed.Controls.Add(RadioButtonLedStatus23);
-            GroupBoxLed.Location = new Point(13, 46);
-            GroupBoxLed.Margin = new Padding(4);
-            GroupBoxLed.Name = "GroupBoxLed";
-            GroupBoxLed.Size = new Size(148, 219);
-            GroupBoxLed.TabIndex = 5;
-            GroupBoxLed.TabStop = false;
-            GroupBoxLed.Tag = "";
-            GroupBoxLed.Text = "Led Status";
+            GroupBoxGpioStatus.Controls.Add(RadioButtonGpioStatus27);
+            GroupBoxGpioStatus.Controls.Add(RadioButtonGpioStatus26);
+            GroupBoxGpioStatus.Controls.Add(RadioButtonGpioStatus25);
+            GroupBoxGpioStatus.Controls.Add(RadioButtonGpioStatus24);
+            GroupBoxGpioStatus.Controls.Add(RadioButtonGpioStatus23);
+            GroupBoxGpioStatus.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            GroupBoxGpioStatus.Location = new Point(17, 65);
+            GroupBoxGpioStatus.Margin = new Padding(4);
+            GroupBoxGpioStatus.Name = "GroupBoxGpioStatus";
+            GroupBoxGpioStatus.Size = new Size(150, 232);
+            GroupBoxGpioStatus.TabIndex = 5;
+            GroupBoxGpioStatus.TabStop = false;
+            GroupBoxGpioStatus.Tag = "";
+            GroupBoxGpioStatus.Text = "Gpio Status";
             // 
-            // RadioButtonLedStatus27
+            // RadioButtonGpioStatus27
             // 
-            RadioButtonLedStatus27.Appearance = Appearance.Button;
-            RadioButtonLedStatus27.BackColor = Color.Yellow;
-            RadioButtonLedStatus27.CheckAlign = ContentAlignment.MiddleCenter;
-            RadioButtonLedStatus27.Location = new Point(4, 179);
-            RadioButtonLedStatus27.Margin = new Padding(4);
-            RadioButtonLedStatus27.Name = "RadioButtonLedStatus27";
-            RadioButtonLedStatus27.Size = new Size(137, 33);
-            RadioButtonLedStatus27.TabIndex = 8;
-            RadioButtonLedStatus27.Tag = "27";
-            RadioButtonLedStatus27.TextAlign = ContentAlignment.MiddleCenter;
-            RadioButtonLedStatus27.UseVisualStyleBackColor = false;
+            RadioButtonGpioStatus27.Appearance = Appearance.Button;
+            RadioButtonGpioStatus27.BackColor = Color.Yellow;
+            RadioButtonGpioStatus27.CheckAlign = ContentAlignment.MiddleCenter;
+            RadioButtonGpioStatus27.Location = new Point(5, 188);
+            RadioButtonGpioStatus27.Margin = new Padding(4);
+            RadioButtonGpioStatus27.Name = "RadioButtonGpioStatus27";
+            RadioButtonGpioStatus27.Size = new Size(137, 33);
+            RadioButtonGpioStatus27.TabIndex = 8;
+            RadioButtonGpioStatus27.Tag = "27";
+            RadioButtonGpioStatus27.TextAlign = ContentAlignment.MiddleCenter;
+            RadioButtonGpioStatus27.UseVisualStyleBackColor = false;
             // 
-            // RadioButtonLedStatus26
+            // RadioButtonGpioStatus26
             // 
-            RadioButtonLedStatus26.Appearance = Appearance.Button;
-            RadioButtonLedStatus26.BackColor = Color.Yellow;
-            RadioButtonLedStatus26.CheckAlign = ContentAlignment.MiddleCenter;
-            RadioButtonLedStatus26.Location = new Point(4, 139);
-            RadioButtonLedStatus26.Margin = new Padding(4);
-            RadioButtonLedStatus26.Name = "RadioButtonLedStatus26";
-            RadioButtonLedStatus26.Size = new Size(137, 33);
-            RadioButtonLedStatus26.TabIndex = 7;
-            RadioButtonLedStatus26.Tag = "26";
-            RadioButtonLedStatus26.TextAlign = ContentAlignment.MiddleCenter;
-            RadioButtonLedStatus26.UseVisualStyleBackColor = false;
+            RadioButtonGpioStatus26.Appearance = Appearance.Button;
+            RadioButtonGpioStatus26.BackColor = Color.Yellow;
+            RadioButtonGpioStatus26.CheckAlign = ContentAlignment.MiddleCenter;
+            RadioButtonGpioStatus26.Location = new Point(5, 148);
+            RadioButtonGpioStatus26.Margin = new Padding(4);
+            RadioButtonGpioStatus26.Name = "RadioButtonGpioStatus26";
+            RadioButtonGpioStatus26.Size = new Size(137, 33);
+            RadioButtonGpioStatus26.TabIndex = 7;
+            RadioButtonGpioStatus26.Tag = "26";
+            RadioButtonGpioStatus26.TextAlign = ContentAlignment.MiddleCenter;
+            RadioButtonGpioStatus26.UseVisualStyleBackColor = false;
             // 
-            // RadioButtonLedStatus25
+            // RadioButtonGpioStatus25
             // 
-            RadioButtonLedStatus25.Appearance = Appearance.Button;
-            RadioButtonLedStatus25.BackColor = Color.Yellow;
-            RadioButtonLedStatus25.CheckAlign = ContentAlignment.MiddleCenter;
-            RadioButtonLedStatus25.Location = new Point(4, 98);
-            RadioButtonLedStatus25.Margin = new Padding(4);
-            RadioButtonLedStatus25.Name = "RadioButtonLedStatus25";
-            RadioButtonLedStatus25.Size = new Size(137, 33);
-            RadioButtonLedStatus25.TabIndex = 6;
-            RadioButtonLedStatus25.Tag = "25";
-            RadioButtonLedStatus25.TextAlign = ContentAlignment.MiddleCenter;
-            RadioButtonLedStatus25.UseVisualStyleBackColor = false;
+            RadioButtonGpioStatus25.Appearance = Appearance.Button;
+            RadioButtonGpioStatus25.BackColor = Color.Yellow;
+            RadioButtonGpioStatus25.CheckAlign = ContentAlignment.MiddleCenter;
+            RadioButtonGpioStatus25.Location = new Point(5, 107);
+            RadioButtonGpioStatus25.Margin = new Padding(4);
+            RadioButtonGpioStatus25.Name = "RadioButtonGpioStatus25";
+            RadioButtonGpioStatus25.Size = new Size(137, 33);
+            RadioButtonGpioStatus25.TabIndex = 6;
+            RadioButtonGpioStatus25.Tag = "25";
+            RadioButtonGpioStatus25.TextAlign = ContentAlignment.MiddleCenter;
+            RadioButtonGpioStatus25.UseVisualStyleBackColor = false;
             // 
-            // RadioButtonLedStatus24
+            // RadioButtonGpioStatus24
             // 
-            RadioButtonLedStatus24.Appearance = Appearance.Button;
-            RadioButtonLedStatus24.BackColor = Color.Yellow;
-            RadioButtonLedStatus24.CheckAlign = ContentAlignment.MiddleCenter;
-            RadioButtonLedStatus24.Location = new Point(4, 57);
-            RadioButtonLedStatus24.Margin = new Padding(4);
-            RadioButtonLedStatus24.Name = "RadioButtonLedStatus24";
-            RadioButtonLedStatus24.Size = new Size(137, 33);
-            RadioButtonLedStatus24.TabIndex = 5;
-            RadioButtonLedStatus24.Tag = "24";
-            RadioButtonLedStatus24.TextAlign = ContentAlignment.MiddleCenter;
-            RadioButtonLedStatus24.UseVisualStyleBackColor = false;
+            RadioButtonGpioStatus24.Appearance = Appearance.Button;
+            RadioButtonGpioStatus24.BackColor = Color.Yellow;
+            RadioButtonGpioStatus24.CheckAlign = ContentAlignment.MiddleCenter;
+            RadioButtonGpioStatus24.Location = new Point(5, 66);
+            RadioButtonGpioStatus24.Margin = new Padding(4);
+            RadioButtonGpioStatus24.Name = "RadioButtonGpioStatus24";
+            RadioButtonGpioStatus24.Size = new Size(137, 33);
+            RadioButtonGpioStatus24.TabIndex = 5;
+            RadioButtonGpioStatus24.Tag = "24";
+            RadioButtonGpioStatus24.TextAlign = ContentAlignment.MiddleCenter;
+            RadioButtonGpioStatus24.UseVisualStyleBackColor = false;
             // 
-            // RadioButtonLedStatus23
+            // RadioButtonGpioStatus23
             // 
-            RadioButtonLedStatus23.Appearance = Appearance.Button;
-            RadioButtonLedStatus23.BackColor = Color.Yellow;
-            RadioButtonLedStatus23.CheckAlign = ContentAlignment.MiddleCenter;
-            RadioButtonLedStatus23.Location = new Point(4, 17);
-            RadioButtonLedStatus23.Margin = new Padding(4);
-            RadioButtonLedStatus23.Name = "RadioButtonLedStatus23";
-            RadioButtonLedStatus23.Size = new Size(137, 33);
-            RadioButtonLedStatus23.TabIndex = 4;
-            RadioButtonLedStatus23.Tag = "23";
-            RadioButtonLedStatus23.TextAlign = ContentAlignment.MiddleCenter;
-            RadioButtonLedStatus23.UseVisualStyleBackColor = false;
+            RadioButtonGpioStatus23.Appearance = Appearance.Button;
+            RadioButtonGpioStatus23.BackColor = Color.Yellow;
+            RadioButtonGpioStatus23.CheckAlign = ContentAlignment.MiddleCenter;
+            RadioButtonGpioStatus23.Location = new Point(5, 26);
+            RadioButtonGpioStatus23.Margin = new Padding(4);
+            RadioButtonGpioStatus23.Name = "RadioButtonGpioStatus23";
+            RadioButtonGpioStatus23.Size = new Size(137, 33);
+            RadioButtonGpioStatus23.TabIndex = 4;
+            RadioButtonGpioStatus23.Tag = "23";
+            RadioButtonGpioStatus23.TextAlign = ContentAlignment.MiddleCenter;
+            RadioButtonGpioStatus23.UseVisualStyleBackColor = false;
             // 
             // ComboBoxHttpEndPoints
             // 
             ComboBoxHttpEndPoints.DropDownStyle = ComboBoxStyle.DropDownList;
+            ComboBoxHttpEndPoints.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             ComboBoxHttpEndPoints.FormattingEnabled = true;
-            ComboBoxHttpEndPoints.Location = new Point(13, 12);
+            ComboBoxHttpEndPoints.Location = new Point(17, 34);
             ComboBoxHttpEndPoints.Margin = new Padding(4);
             ComboBoxHttpEndPoints.Name = "ComboBoxHttpEndPoints";
-            ComboBoxHttpEndPoints.Size = new Size(277, 24);
+            ComboBoxHttpEndPoints.Size = new Size(366, 24);
             ComboBoxHttpEndPoints.TabIndex = 3;
             ComboBoxHttpEndPoints.SelectionChangeCommitted += CmbHttpEndPoints_SelectionChangeCommitted;
             // 
@@ -310,7 +341,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1060, 292);
+            ClientSize = new Size(1130, 310);
             Controls.Add(MainPanel);
             Font = new Font("Microsoft Sans Serif", 10F);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -323,11 +354,12 @@
             FormClosing += MainForm_FormClosing;
             FormClosed += MainForm_FormClosed;
             MainPanel.ResumeLayout(false);
+            GroupBoxMemoryInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)DataGridViewMemoryInfo).EndInit();
             ContextMenuStripDataGrid.ResumeLayout(false);
             GroupBoxTemperatureInfo.ResumeLayout(false);
             GroupBoxTemperatureInfo.PerformLayout();
-            GroupBoxLed.ResumeLayout(false);
+            GroupBoxGpioStatus.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -335,12 +367,12 @@
 
         private Panel MainPanel;
         private ComboBox ComboBoxHttpEndPoints;
-        private RadioButton RadioButtonLedStatus23;
-        private GroupBox GroupBoxLed;
-        private RadioButton RadioButtonLedStatus24;
-        private RadioButton RadioButtonLedStatus25;
-        private RadioButton RadioButtonLedStatus26;
-        private RadioButton RadioButtonLedStatus27;
+        private RadioButton RadioButtonGpioStatus23;
+        private GroupBox GroupBoxGpioStatus;
+        private RadioButton RadioButtonGpioStatus24;
+        private RadioButton RadioButtonGpioStatus25;
+        private RadioButton RadioButtonGpioStatus26;
+        private RadioButton RadioButtonGpioStatus27;
         private GroupBox GroupBoxTemperatureInfo;
         private Label LabelTemperatureCel;
         private Label LabelTempFarenh;
@@ -350,5 +382,7 @@
         private DataGridView DataGridViewMemoryInfo;
         private ContextMenuStrip ContextMenuStripDataGrid;
         private ToolStripMenuItem copyToolStripMenuItem;
+        private GroupBox GroupBoxMemoryInfo;
+        private Label LableGpioActions;
     }
 }
