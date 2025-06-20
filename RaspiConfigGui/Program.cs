@@ -43,7 +43,7 @@ namespace RaspiDashboard
         {
             return Host.CreateDefaultBuilder().ConfigureServices((context, services) => 
             {
-                services.AddSingleton<RaspiApiController>();
+                services.AddSingleton<RaspiApiService>();
                 services.AddSingleton<MainForm>();
                 services.AddSingleton<ConcurrentQueue<GpioObject>>();
 

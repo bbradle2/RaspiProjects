@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 
 namespace RaspiDashboard.Controllers
 {
-    public class RaspiApiController : IRaspiApiController
+    public class RaspiApiService : IRaspiApiService
     {
         
         private readonly ConcurrentQueue<GpioObject>? _gpioObjectsQueue;
@@ -17,7 +17,7 @@ namespace RaspiDashboard.Controllers
         private readonly HttpClient _httpClient;
         private readonly string? _startEndPoint;
 
-        public event GpioEventHandler? OnGpioEvent;
+        public event GpioChangeEventHandler? OnGpioChangeEvent;
         public long IsClosed = 0;
 
         static string DecryptStringFromBytes_Aes(byte[] cipherText, byte[] key, byte[] iv)
@@ -60,7 +60,7 @@ namespace RaspiDashboard.Controllers
             return plaintext;
         }
 
-        public RaspiApiController(IConfiguration config, IHttpClientFactory httpClientfactory, ConcurrentQueue<GpioObject> gpioObjectsQueue)
+        public RaspiApiService(IConfiguration config, IHttpClientFactory httpClientfactory, ConcurrentQueue<GpioObject> gpioObjectsQueue)
         {
             _config = config;
             _httpClient = httpClientfactory.CreateClient(_config["ConnectionName"]!);
@@ -83,17 +83,6 @@ namespace RaspiDashboard.Controllers
             var gitSemVer = initResponse.Headers.GetValues("GitSemVer").First();
             var httpEndPoints = await initResponse.Content.ReadFromJsonAsync<HttpEndPoint[]>();
 
-            //var encStream = await initResponse.Content.ReadAsStreamAsync();
-            //using var memoryStream = new MemoryStream();
-            //await encStream.CopyToAsync(memoryStream);
-
-            //var encryptedBytes =  memoryStream.ToArray();
-
-            //var httpEndPoints = await initResponse.Content.ReadFromJsonAsync<HttpEndPoint[]>();
-            //var key = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F };
-            //var iv = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0D };
-            //string resStr = DecryptStringFromBytes_Aes(encryptedBytes, key, iv);
-            //var httpEndPoints = JsonSerializer.Deserialize<HttpEndPoint[]>(resStr);
             return (httpEndPoints, gitSemVer)!;
         }
 
@@ -127,7 +116,7 @@ namespace RaspiDashboard.Controllers
                 {
                     return await response.Content.ReadFromJsonAsync<MemoryInfoObject>();
                 }
-
+                              
                 Debug.WriteLine("Invalid EndPoint");
                 return null;
 
@@ -161,8 +150,8 @@ namespace RaspiDashboard.Controllers
                     _gpioObjectsQueue.Enqueue(item);
                 }
 
-                if (OnGpioEvent != null)
-                    OnGpioEvent?.Invoke(this, _gpioObjectsQueue);
+                if (OnGpioChangeEvent != null)
+                    OnGpioChangeEvent?.Invoke(this, _gpioObjectsQueue);
 
                 return _gpioObjectsQueue;
             }
@@ -177,12 +166,12 @@ namespace RaspiDashboard.Controllers
         public async Task<ConcurrentQueue<GpioObject>> GetGpioStatusAsync()
         {
             using HttpResponseMessage response = await _httpClient!.GetAsync(_config["GpioStatus"]);
-            var _gpioObjectsQueue = await response.Content.ReadFromJsonAsync<ConcurrentQueue<GpioObject>>();
+            var gpioObjectsQueue = await response.Content.ReadFromJsonAsync<ConcurrentQueue<GpioObject>>();
 
-            if (OnGpioEvent != null)
-               OnGpioEvent?.Invoke(this, _gpioObjectsQueue);
+            if (OnGpioChangeEvent != null)
+                OnGpioChangeEvent?.Invoke(this, gpioObjectsQueue);
 
-            return _gpioObjectsQueue!;
+            return gpioObjectsQueue!;
 
         }
 

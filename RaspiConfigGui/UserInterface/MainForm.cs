@@ -4,24 +4,34 @@ using RaspiDashboard.Models;
 using System.Collections.Concurrent;
 using System.Data;
 using System.Diagnostics;
+using System.Reflection;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+
 
 namespace UserInterface
 {
 
     public partial class MainForm : Form
     {
-        private readonly RaspiApiController _raspiApiController;
+        private readonly RaspiApiService _raspiApiService;
         private readonly IConfiguration _config;
         private readonly IServiceProvider _serviceProvider;
         private volatile bool _isConnected = false;
+        private readonly System.Timers.Timer _pollingTimerUpdate;
 
-        public MainForm(IConfiguration config, IServiceProvider serviceProvider, RaspiApiController raspiApiController)
+        public MainForm(IConfiguration config, IServiceProvider serviceProvider, RaspiApiService raspiApiService)
         {
             InitializeComponent();
-
+            
             _serviceProvider = serviceProvider;
             _config = config;
-            _raspiApiController = raspiApiController;
+            _raspiApiService = raspiApiService;
+            _pollingTimerUpdate = new System.Timers.Timer();
+            _pollingTimerUpdate.Elapsed += PollingTimerUpdate_Elapsed;
+
+            SetStyle(ControlStyles.DoubleBuffer, true);
 
             InitMainForm().GetAwaiter();
 
@@ -35,7 +45,7 @@ namespace UserInterface
                 ComboBoxHttpEndPoints.Enabled = false;
 
                 Text = "Loading Endpoints.....";
-                (HttpEndPoint[] endpoints, string gitSimVer) = await _raspiApiController.GetEndPointsAsync();
+                (HttpEndPoint[] endpoints, string gitSimVer) = await _raspiApiService.GetEndPointsAsync();
 
                 _isConnected = true;
 
@@ -45,17 +55,16 @@ namespace UserInterface
                 await InvokeAsync(() => ComboBoxHttpEndPoints.SelectedItem = null);
                 await InvokeAsync(() => ComboBoxHttpEndPoints.Enabled = true);
 
-                _raspiApiController.OnGpioEvent += RaspiApiController_OnGpioEvent;
+                _raspiApiService.OnGpioChangeEvent += RaspiApiService_OnGpioChangeEvent;
                
-                await _raspiApiController.GetGpioStatusAsync();
+                await _raspiApiService.GetGpioStatusAsync();
 
-                await InvokeAsync(() => TimeUpdateForm.Enabled = false);
-                TimerTemperature_Tick(null,null);
-
-                await InvokeAsync(() => TimeUpdateForm.Interval = 10000);
-                await InvokeAsync(() => TimeUpdateForm.Enabled = true);
-                await InvokeAsync(() => TimeUpdateForm.Start());
-                                
+                _pollingTimerUpdate.Enabled = false;
+                PollingTimerUpdate_Elapsed(null,null);
+                _pollingTimerUpdate.Interval = 10000;
+                _pollingTimerUpdate.Enabled = true;
+                _pollingTimerUpdate.Start();
+                               
                 Log($"Info : Start Complete ", EventLogEntryType.Information);
 
             }
@@ -71,7 +80,7 @@ namespace UserInterface
             }
             finally
             {
-                Text = "";
+                await InvokeAsync(() => Text = "");
             }
 
             return;
@@ -94,10 +103,10 @@ namespace UserInterface
                             eventID: 6001);
         }
 
-        private async Task UpdateTemperatureInfo(TemperatureInfoObject? temperatureInfoObject)
+        private async Task UpdateViewTemperatureInfo(TemperatureInfoObject? temperatureInfoObject)
         {
 
-            if (!IsDisposed && IsHandleCreated && _raspiApiController.IsClosed == 0)
+            if (!IsDisposed && IsHandleCreated && _raspiApiService.IsClosed == 0)
             {
                 if (temperatureInfoObject is not null)
                 {
@@ -107,7 +116,6 @@ namespace UserInterface
                     await temperature.First().InvokeAsync(() => temperature.First(s => s.Name == nameof(TextBoxTempFarenh)).Text = Convert.ToString(farenh));
                     await temperature.First().InvokeAsync(() => temperature.First(s => s.Name == nameof(TextBoxTempCelcius)).Text = Convert.ToString(celsius));
                     await InvokeAsync(() => Text = temperatureInfoObject.ProductName);
-
 
                 } 
             }
@@ -119,10 +127,7 @@ namespace UserInterface
         //    {
         //        if (systemInfoObject is not null)
         //        {
-        //            //    var temperature = await TempaturePanel.InvokeAsync(() => TempaturePanel.Controls.OfType<TextBox>(), CancellationToken.None);
-
-        //            //    await temperature.First().InvokeAsync(() => temperature.First(s => s.Name == nameof(TextBoxTempFarenh)).Text = Convert.ToString(temperatureInfoObject.TemperatureFahrenheit));
-        //            //    await temperature.First().InvokeAsync(() => temperature.First(s => s.Name == nameof(TextBoxTempCelcius)).Text = Convert.ToString(temperatureInfoObject.TemperatureCelcius));
+       
         //        }
         //    }
 
@@ -142,10 +147,10 @@ namespace UserInterface
         //    }
         //}
 
-        private async Task UpdateMemoryInfo(MemoryInfoObject? memoryInfoObject)
+        private async Task UpdateViewMemoryInfo(MemoryInfoObject? memoryInfoObject)
         {
 
-            if (!IsDisposed && IsHandleCreated && _raspiApiController.IsClosed == 0)
+            if (!IsDisposed && IsHandleCreated && _raspiApiService.IsClosed == 0)
             {
                 if (memoryInfoObject is not null)
                 {
@@ -164,6 +169,7 @@ namespace UserInterface
                     }
 
                     var suffix = "(GiB)";
+                    
                     await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.DataSource = dataSource);
                     await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.Columns.Remove("ProductName"));
                     await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.Columns.Remove("Description"));
@@ -175,7 +181,7 @@ namespace UserInterface
                     await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.Columns["SwapFree"]!.HeaderText = "Swap Free" + suffix);
                     await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.AllowUserToResizeColumns = true);
                     await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.ColumnHeadersDefaultCellStyle.BackColor = Control.DefaultBackColor);
-                    await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.RowsDefaultCellStyle.BackColor = Control.DefaultBackColor);
+                    //await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.RowsDefaultCellStyle.BackColor = Color.Coral);
                     await DataGridViewMemoryInfo.InvokeAsync(() => DataGridViewMemoryInfo.EnableHeadersVisualStyles = false);
 
                 }
@@ -191,7 +197,7 @@ namespace UserInterface
 
                 if (httpEndPoint!.HttpMethod!.Equals("PUT"))
                 {
-                    var response = await _raspiApiController.PutGpioAsync(httpEndPoint!);
+                    var response = await _raspiApiService.PutGpioAsync(httpEndPoint!);
                     if (response is ConcurrentQueue<GpioObject> gpioObjects)
                     {
 
@@ -204,45 +210,45 @@ namespace UserInterface
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            TimeUpdateForm.Stop();
-            TimeUpdateForm.Enabled = false;
-            Interlocked.Exchange(ref _raspiApiController.IsClosed, 1);
+            _pollingTimerUpdate.Stop();
+            _pollingTimerUpdate.Enabled = false;
+            Interlocked.Exchange(ref _raspiApiService.IsClosed, 1);
             Log("Info : Stopping Program", EventLogEntryType.Information);
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if(0 == Interlocked.Exchange(ref _raspiApiController.IsClosed, 1))
+            if(0 == Interlocked.Exchange(ref _raspiApiService.IsClosed, 1))
             {
-                _raspiApiController.OnGpioEvent -= RaspiApiController_OnGpioEvent;
-                _raspiApiController.CleanUp();
+                _raspiApiService.OnGpioChangeEvent -= RaspiApiService_OnGpioChangeEvent;
+                _raspiApiService.CleanUp();
             }
             
             Log("Info : Stopped Program", EventLogEntryType.Information);
         }
 
-        private async Task UpdateGpioRadioButtonAsync(bool? gpioValue, RadioButton radioButton)
+        private async Task UpdateViewGpioLabelAsync(bool? gpioValue, Label labelGpio)
         {
             try
             {
-                if (radioButton is null) return;
+                if (labelGpio is null) return;
 
-                if (!IsDisposed && IsHandleCreated && _raspiApiController.IsClosed == 0)
+                if (!IsDisposed && IsHandleCreated && _raspiApiService.IsClosed == 0)
                 {
                     if (gpioValue == true)
                     {
-                        await radioButton.InvokeAsync(() => radioButton.BackColor = Color.Green);
-                        await radioButton.InvokeAsync(() => radioButton.Text = "Gpio " + radioButton.Tag + " High");
+                        await labelGpio.InvokeAsync(() => labelGpio.BackColor = Color.Green);
+                        await labelGpio.InvokeAsync(() => labelGpio.Text = "Gpio " + labelGpio.Tag + " High");
                     }
                     else if (gpioValue == false)
                     {
-                        await radioButton.InvokeAsync(() => radioButton.BackColor = Color.Red);
-                        await radioButton.InvokeAsync(() => radioButton.Text = "Gpio " + radioButton.Tag + " Low");
+                        await labelGpio.InvokeAsync(() => labelGpio.BackColor = Color.Red);
+                        await labelGpio.InvokeAsync(() => labelGpio.Text = "Gpio " + labelGpio.Tag + " Low");
                     }
                     else
                     {
-                        await radioButton.InvokeAsync(() => radioButton.BackColor = Color.Yellow);
-                        await radioButton.InvokeAsync(() => radioButton.Text = "Gpio " + radioButton.Tag + " Not Open");
+                        await labelGpio.InvokeAsync(() => labelGpio.BackColor = Color.Yellow);
+                        await labelGpio.InvokeAsync(() => labelGpio.Text = "Gpio " + labelGpio.Tag + " Not Open");
                     }
                 }
             }
@@ -252,11 +258,11 @@ namespace UserInterface
             }
         }
 
-        private void RaspiApiController_OnGpioEvent(object sender, ConcurrentQueue<GpioObject>? gpioObjectsQueue)
+        private void RaspiApiService_OnGpioChangeEvent(object sender, ConcurrentQueue<GpioObject>? gpioObjectsQueue)
         {
             try
             {
-                if (!IsDisposed && IsHandleCreated && _raspiApiController.IsClosed == 0)
+                if (!IsDisposed && IsHandleCreated && _raspiApiService.IsClosed == 0)
                 {
                     var options = new ParallelOptions()
                     {
@@ -277,14 +283,14 @@ namespace UserInterface
                     {
                         if (GroupBoxGpioStatus is null && !GroupBoxGpioStatus!.IsHandleCreated && !GroupBoxGpioStatus!.IsDisposed) { return; }
 
-                        var radioButtons = await GroupBoxGpioStatus.InvokeAsync(() => GroupBoxGpioStatus.Controls.OfType<RadioButton>(), CancellationToken.None);
+                        var labelGpios = await GroupBoxGpioStatus.InvokeAsync(() => GroupBoxGpioStatus.Controls.OfType<Label>(), CancellationToken.None);
 
-                        if (radioButtons != null)
+                        if (labelGpios != null)
                         {
-                            var radioButton = await GroupBoxGpioStatus.InvokeAsync(() => radioButtons.First(s => Convert.ToInt32(s.Tag) == gpioObject.GpioNumber), CancellationToken.None);
+                            var labelGpio = await GroupBoxGpioStatus.InvokeAsync(() => labelGpios.First(s => Convert.ToInt32(s.Tag) == gpioObject.GpioNumber), CancellationToken.None);
 
-                            if (radioButton != null && radioButton.IsHandleCreated && !radioButton.IsDisposed)
-                                radioButton?.InvokeAsync(async () => await UpdateGpioRadioButtonAsync(gpioObject.GpioValue, radioButton), CancellationToken.None);
+                            if (labelGpio != null && labelGpio.IsHandleCreated && !labelGpio.IsDisposed)
+                                labelGpio?.InvokeAsync(async () => await UpdateViewGpioLabelAsync(gpioObject.GpioValue, labelGpio), CancellationToken.None);
                             else
                                 return;
                         }
@@ -297,7 +303,7 @@ namespace UserInterface
             }
         }
 
-        private async void TimerTemperature_Tick(object? sender, EventArgs? e)
+        private async void PollingTimerUpdate_Elapsed(object? sender, System.Timers.ElapsedEventArgs? e)
         {
             HttpEndPoint endPoint = new()
             {
@@ -307,8 +313,8 @@ namespace UserInterface
 
             if (endPoint.HttpCallEndPoint != null)
             {
-                var response = await _raspiApiController.GetInfoAsync(endPoint!);
-                await UpdateTemperatureInfo((TemperatureInfoObject?)response!);
+                var response = await _raspiApiService.GetInfoAsync(endPoint!);
+                await UpdateViewTemperatureInfo((TemperatureInfoObject?)response!);
 
                 //endPoint.HttpCallEndPoint = _config["SystemInfo"];              
                 //response = await _raspiApiController.GetInfoAsync(endPoint!);
@@ -319,8 +325,8 @@ namespace UserInterface
                 //UpdateCpuInfo((CPUInfoObject?)response!);
 
                 endPoint.HttpCallEndPoint = _config["MemoryInfo"];
-                response = await _raspiApiController.GetInfoAsync(endPoint!);
-                await UpdateMemoryInfo((MemoryInfoObject?)response!);
+                response = await _raspiApiService.GetInfoAsync(endPoint!);
+                await UpdateViewMemoryInfo((MemoryInfoObject?)response!);
             }
 
         }
@@ -330,7 +336,6 @@ namespace UserInterface
             if (e.ClickedItem?.Text == "Copy" && DataGridViewMemoryInfo?.CurrentCell?.Value != null)
             {
                 var val = DataGridViewMemoryInfo?.CurrentCell?.Value?.ToString();
-
 
                 Thread thread = new(() => Clipboard.SetDataObject(val!, true));
                 thread.SetApartmentState(ApartmentState.STA);

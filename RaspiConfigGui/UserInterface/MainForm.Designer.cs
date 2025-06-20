@@ -46,13 +46,12 @@
             LabelTempFarenh = new Label();
             LabelTemperatureCel = new Label();
             GroupBoxGpioStatus = new GroupBox();
-            RadioButtonGpioStatus27 = new RadioButton();
-            RadioButtonGpioStatus26 = new RadioButton();
-            RadioButtonGpioStatus25 = new RadioButton();
-            RadioButtonGpioStatus24 = new RadioButton();
-            RadioButtonGpioStatus23 = new RadioButton();
+            LabelGpioStatus27 = new Label();
+            LabelGpioStatus26 = new Label();
+            LabelGpioStatus25 = new Label();
+            LabelGpioStatus24 = new Label();
+            LabelGpioStatus23 = new Label();
             ComboBoxHttpEndPoints = new ComboBox();
-            TimeUpdateForm = new System.Windows.Forms.Timer(components);
             MainPanel.SuspendLayout();
             GroupBoxMemoryInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DataGridViewMemoryInfo).BeginInit();
@@ -154,7 +153,6 @@
             DataGridViewMemoryInfo.Size = new Size(930, 80);
             DataGridViewMemoryInfo.StandardTab = true;
             DataGridViewMemoryInfo.TabIndex = 8;
-            DataGridViewMemoryInfo.VirtualMode = true;
             DataGridViewMemoryInfo.CellMouseDown += DataGridViewMemoryInfo_CellMouseDown;
             DataGridViewMemoryInfo.CellPainting += DataGridViewMemoryInfo_CellPainting;
             DataGridViewMemoryInfo.KeyDown += DataGridViewMemoryInfo_KeyDown;
@@ -234,11 +232,11 @@
             // 
             // GroupBoxGpioStatus
             // 
-            GroupBoxGpioStatus.Controls.Add(RadioButtonGpioStatus27);
-            GroupBoxGpioStatus.Controls.Add(RadioButtonGpioStatus26);
-            GroupBoxGpioStatus.Controls.Add(RadioButtonGpioStatus25);
-            GroupBoxGpioStatus.Controls.Add(RadioButtonGpioStatus24);
-            GroupBoxGpioStatus.Controls.Add(RadioButtonGpioStatus23);
+            GroupBoxGpioStatus.Controls.Add(LabelGpioStatus27);
+            GroupBoxGpioStatus.Controls.Add(LabelGpioStatus26);
+            GroupBoxGpioStatus.Controls.Add(LabelGpioStatus25);
+            GroupBoxGpioStatus.Controls.Add(LabelGpioStatus24);
+            GroupBoxGpioStatus.Controls.Add(LabelGpioStatus23);
             GroupBoxGpioStatus.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             GroupBoxGpioStatus.Location = new Point(17, 65);
             GroupBoxGpioStatus.Margin = new Padding(4);
@@ -249,75 +247,60 @@
             GroupBoxGpioStatus.Tag = "";
             GroupBoxGpioStatus.Text = "Gpio Status";
             // 
-            // RadioButtonGpioStatus27
+            // LabelGpioStatus27
             // 
-            RadioButtonGpioStatus27.Appearance = Appearance.Button;
-            RadioButtonGpioStatus27.BackColor = Color.Yellow;
-            RadioButtonGpioStatus27.CheckAlign = ContentAlignment.MiddleCenter;
-            RadioButtonGpioStatus27.Location = new Point(5, 188);
-            RadioButtonGpioStatus27.Margin = new Padding(4);
-            RadioButtonGpioStatus27.Name = "RadioButtonGpioStatus27";
-            RadioButtonGpioStatus27.Size = new Size(137, 33);
-            RadioButtonGpioStatus27.TabIndex = 8;
-            RadioButtonGpioStatus27.Tag = "27";
-            RadioButtonGpioStatus27.TextAlign = ContentAlignment.MiddleCenter;
-            RadioButtonGpioStatus27.UseVisualStyleBackColor = false;
+            LabelGpioStatus27.BackColor = Color.Yellow;
+            LabelGpioStatus27.Location = new Point(5, 188);
+            LabelGpioStatus27.Margin = new Padding(4);
+            LabelGpioStatus27.Name = "LabelGpioStatus27";
+            LabelGpioStatus27.Size = new Size(137, 33);
+            LabelGpioStatus27.TabIndex = 8;
+            LabelGpioStatus27.Tag = "27";
+            LabelGpioStatus27.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // RadioButtonGpioStatus26
+            // LabelGpioStatus26
             // 
-            RadioButtonGpioStatus26.Appearance = Appearance.Button;
-            RadioButtonGpioStatus26.BackColor = Color.Yellow;
-            RadioButtonGpioStatus26.CheckAlign = ContentAlignment.MiddleCenter;
-            RadioButtonGpioStatus26.Location = new Point(5, 148);
-            RadioButtonGpioStatus26.Margin = new Padding(4);
-            RadioButtonGpioStatus26.Name = "RadioButtonGpioStatus26";
-            RadioButtonGpioStatus26.Size = new Size(137, 33);
-            RadioButtonGpioStatus26.TabIndex = 7;
-            RadioButtonGpioStatus26.Tag = "26";
-            RadioButtonGpioStatus26.TextAlign = ContentAlignment.MiddleCenter;
-            RadioButtonGpioStatus26.UseVisualStyleBackColor = false;
+            LabelGpioStatus26.BackColor = Color.Yellow;
+            LabelGpioStatus26.Location = new Point(5, 148);
+            LabelGpioStatus26.Margin = new Padding(4);
+            LabelGpioStatus26.Name = "LabelGpioStatus26";
+            LabelGpioStatus26.Size = new Size(137, 33);
+            LabelGpioStatus26.TabIndex = 7;
+            LabelGpioStatus26.Tag = "26";
+            LabelGpioStatus26.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // RadioButtonGpioStatus25
+            // LabelGpioStatus25
             // 
-            RadioButtonGpioStatus25.Appearance = Appearance.Button;
-            RadioButtonGpioStatus25.BackColor = Color.Yellow;
-            RadioButtonGpioStatus25.CheckAlign = ContentAlignment.MiddleCenter;
-            RadioButtonGpioStatus25.Location = new Point(5, 107);
-            RadioButtonGpioStatus25.Margin = new Padding(4);
-            RadioButtonGpioStatus25.Name = "RadioButtonGpioStatus25";
-            RadioButtonGpioStatus25.Size = new Size(137, 33);
-            RadioButtonGpioStatus25.TabIndex = 6;
-            RadioButtonGpioStatus25.Tag = "25";
-            RadioButtonGpioStatus25.TextAlign = ContentAlignment.MiddleCenter;
-            RadioButtonGpioStatus25.UseVisualStyleBackColor = false;
+            LabelGpioStatus25.BackColor = Color.Yellow;
+            LabelGpioStatus25.Location = new Point(5, 107);
+            LabelGpioStatus25.Margin = new Padding(4);
+            LabelGpioStatus25.Name = "LabelGpioStatus25";
+            LabelGpioStatus25.Size = new Size(137, 33);
+            LabelGpioStatus25.TabIndex = 6;
+            LabelGpioStatus25.Tag = "25";
+            LabelGpioStatus25.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // RadioButtonGpioStatus24
+            // LabelGpioStatus24
             // 
-            RadioButtonGpioStatus24.Appearance = Appearance.Button;
-            RadioButtonGpioStatus24.BackColor = Color.Yellow;
-            RadioButtonGpioStatus24.CheckAlign = ContentAlignment.MiddleCenter;
-            RadioButtonGpioStatus24.Location = new Point(5, 66);
-            RadioButtonGpioStatus24.Margin = new Padding(4);
-            RadioButtonGpioStatus24.Name = "RadioButtonGpioStatus24";
-            RadioButtonGpioStatus24.Size = new Size(137, 33);
-            RadioButtonGpioStatus24.TabIndex = 5;
-            RadioButtonGpioStatus24.Tag = "24";
-            RadioButtonGpioStatus24.TextAlign = ContentAlignment.MiddleCenter;
-            RadioButtonGpioStatus24.UseVisualStyleBackColor = false;
+            LabelGpioStatus24.BackColor = Color.Yellow;
+            LabelGpioStatus24.Location = new Point(5, 66);
+            LabelGpioStatus24.Margin = new Padding(4);
+            LabelGpioStatus24.Name = "LabelGpioStatus24";
+            LabelGpioStatus24.Size = new Size(137, 33);
+            LabelGpioStatus24.TabIndex = 5;
+            LabelGpioStatus24.Tag = "24";
+            LabelGpioStatus24.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // RadioButtonGpioStatus23
+            // LabelGpioStatus23
             // 
-            RadioButtonGpioStatus23.Appearance = Appearance.Button;
-            RadioButtonGpioStatus23.BackColor = Color.Yellow;
-            RadioButtonGpioStatus23.CheckAlign = ContentAlignment.MiddleCenter;
-            RadioButtonGpioStatus23.Location = new Point(5, 26);
-            RadioButtonGpioStatus23.Margin = new Padding(4);
-            RadioButtonGpioStatus23.Name = "RadioButtonGpioStatus23";
-            RadioButtonGpioStatus23.Size = new Size(137, 33);
-            RadioButtonGpioStatus23.TabIndex = 4;
-            RadioButtonGpioStatus23.Tag = "23";
-            RadioButtonGpioStatus23.TextAlign = ContentAlignment.MiddleCenter;
-            RadioButtonGpioStatus23.UseVisualStyleBackColor = false;
+            LabelGpioStatus23.BackColor = Color.Yellow;
+            LabelGpioStatus23.Location = new Point(5, 26);
+            LabelGpioStatus23.Margin = new Padding(4);
+            LabelGpioStatus23.Name = "LabelGpioStatus23";
+            LabelGpioStatus23.Size = new Size(137, 33);
+            LabelGpioStatus23.TabIndex = 4;
+            LabelGpioStatus23.Tag = "23";
+            LabelGpioStatus23.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ComboBoxHttpEndPoints
             // 
@@ -330,12 +313,6 @@
             ComboBoxHttpEndPoints.Size = new Size(366, 24);
             ComboBoxHttpEndPoints.TabIndex = 3;
             ComboBoxHttpEndPoints.SelectionChangeCommitted += CmbHttpEndPoints_SelectionChangeCommitted;
-            // 
-            // TimeUpdateForm
-            // 
-            TimeUpdateForm.Enabled = true;
-            TimeUpdateForm.Interval = 5000;
-            TimeUpdateForm.Tick += TimerTemperature_Tick;
             // 
             // MainForm
             // 
@@ -367,18 +344,17 @@
 
         private Panel MainPanel;
         private ComboBox ComboBoxHttpEndPoints;
-        private RadioButton RadioButtonGpioStatus23;
+        private Label LabelGpioStatus23;
         private GroupBox GroupBoxGpioStatus;
-        private RadioButton RadioButtonGpioStatus24;
-        private RadioButton RadioButtonGpioStatus25;
-        private RadioButton RadioButtonGpioStatus26;
-        private RadioButton RadioButtonGpioStatus27;
+        private Label LabelGpioStatus24;
+        private Label LabelGpioStatus25;
+        private Label LabelGpioStatus26;
+        private Label LabelGpioStatus27;
         private GroupBox GroupBoxTemperatureInfo;
         private Label LabelTemperatureCel;
         private Label LabelTempFarenh;
         private TextBox TextBoxTempFarenh;
         private TextBox TextBoxTempCelcius;
-        private System.Windows.Forms.Timer TimeUpdateForm;
         private DataGridView DataGridViewMemoryInfo;
         private ContextMenuStrip ContextMenuStripDataGrid;
         private ToolStripMenuItem copyToolStripMenuItem;
