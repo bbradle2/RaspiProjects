@@ -12,7 +12,7 @@ namespace RaspiDashboard.Interfaces
         Task<ConcurrentQueue<GpioObject>?> PutGpioAsync(HttpEndPoint endPoint);
         Task <(HttpEndPoint[], string)> GetEndPointsAsync();
         event GpioChangeEventHandler? OnGpioChangeEvent;
-        public void CleanUp();
+        void CleanUp();
 
     }
 }
