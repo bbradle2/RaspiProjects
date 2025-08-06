@@ -139,10 +139,7 @@ namespace UserInterface
         //    {
         //        if (cpuInfoObject is not null)
         //        {
-        //            //    var temperature = await TempaturePanel.InvokeAsync(() => TempaturePanel.Controls.OfType<TextBox>(), CancellationToken.None);
-
-        //            //    await temperature.First().InvokeAsync(() => temperature.First(s => s.Name == nameof(TextBoxTempFarenh)).Text = Convert.ToString(temperatureInfoObject.TemperatureFahrenheit));
-        //            //    await temperature.First().InvokeAsync(() => temperature.First(s => s.Name == nameof(TextBoxTempCelcius)).Text = Convert.ToString(temperatureInfoObject.TemperatureCelcius));
+       
         //        }
         //    }
         //}
@@ -317,7 +314,7 @@ namespace UserInterface
                 await UpdateViewTemperatureInfo((TemperatureInfoObject?)response!);
 
                 //endPoint.HttpCallEndPoint = _config["SystemInfo"];              
-                //response = await _raspiApiController.GetInfoAsync(endPoint!);
+                //response = await _raspiApiService.GetInfoAsync(endPoint!);
                 //UpdateSystemInfo((SystemInfoObject?)response!);
 
                 //endPoint.HttpCallEndPoint = _config["CpuInfo"];
