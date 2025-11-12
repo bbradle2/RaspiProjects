@@ -49,7 +49,7 @@ namespace RaspiDashboard
 
                 var connName = context.Configuration["ConnectionName"];
                
-                services.AddHttpClient(connName!, (s, c) =>
+                services.AddHttpClient(connName!, (_, c) =>
                 {
                     string portNumber = context.Configuration["PortNumber"]!;
                     string hostName = context.Configuration["HostName"]!;

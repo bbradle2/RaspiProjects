@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             MainPanel = new Panel();
             LableGpioActions = new Label();
             GroupBoxMemoryInfo = new GroupBox();
@@ -104,50 +104,50 @@
             DataGridViewMemoryInfo.AllowUserToDeleteRows = false;
             DataGridViewMemoryInfo.AllowUserToResizeColumns = false;
             DataGridViewMemoryInfo.AllowUserToResizeRows = false;
-            dataGridViewCellStyle6.BackColor = SystemColors.Control;
-            DataGridViewMemoryInfo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            DataGridViewMemoryInfo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             DataGridViewMemoryInfo.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             DataGridViewMemoryInfo.BackgroundColor = SystemColors.Control;
             DataGridViewMemoryInfo.BorderStyle = BorderStyle.None;
             DataGridViewMemoryInfo.CellBorderStyle = DataGridViewCellBorderStyle.None;
             DataGridViewMemoryInfo.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             DataGridViewMemoryInfo.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = SystemColors.ControlLight;
-            dataGridViewCellStyle7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.False;
-            DataGridViewMemoryInfo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.ControlLight;
+            dataGridViewCellStyle2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            DataGridViewMemoryInfo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             DataGridViewMemoryInfo.ColumnHeadersHeight = 30;
             DataGridViewMemoryInfo.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             DataGridViewMemoryInfo.ContextMenuStrip = ContextMenuStripDataGrid;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            DataGridViewMemoryInfo.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            DataGridViewMemoryInfo.DefaultCellStyle = dataGridViewCellStyle3;
             DataGridViewMemoryInfo.Location = new Point(6, 25);
             DataGridViewMemoryInfo.MultiSelect = false;
             DataGridViewMemoryInfo.Name = "DataGridViewMemoryInfo";
             DataGridViewMemoryInfo.ReadOnly = true;
             DataGridViewMemoryInfo.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = SystemColors.Control;
-            dataGridViewCellStyle9.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle9.ForeColor = SystemColors.Window;
-            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
-            DataGridViewMemoryInfo.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Control;
+            dataGridViewCellStyle4.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = SystemColors.Window;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            DataGridViewMemoryInfo.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             DataGridViewMemoryInfo.RowHeadersVisible = false;
             DataGridViewMemoryInfo.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle10.BackColor = Color.FromArgb(224, 224, 224);
-            DataGridViewMemoryInfo.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(224, 224, 224);
+            DataGridViewMemoryInfo.RowsDefaultCellStyle = dataGridViewCellStyle5;
             DataGridViewMemoryInfo.SelectionMode = DataGridViewSelectionMode.CellSelect;
             DataGridViewMemoryInfo.ShowEditingIcon = false;
             DataGridViewMemoryInfo.Size = new Size(930, 80);
@@ -250,10 +250,10 @@
             // LabelGpioStatus27
             // 
             LabelGpioStatus27.BackColor = Color.Yellow;
-            LabelGpioStatus27.Location = new Point(5, 188);
+            LabelGpioStatus27.Location = new Point(6, 188);
             LabelGpioStatus27.Margin = new Padding(4);
             LabelGpioStatus27.Name = "LabelGpioStatus27";
-            LabelGpioStatus27.Size = new Size(137, 33);
+            LabelGpioStatus27.Size = new Size(138, 33);
             LabelGpioStatus27.TabIndex = 8;
             LabelGpioStatus27.Tag = "27";
             LabelGpioStatus27.TextAlign = ContentAlignment.MiddleCenter;
@@ -261,10 +261,10 @@
             // LabelGpioStatus26
             // 
             LabelGpioStatus26.BackColor = Color.Yellow;
-            LabelGpioStatus26.Location = new Point(5, 148);
+            LabelGpioStatus26.Location = new Point(6, 148);
             LabelGpioStatus26.Margin = new Padding(4);
             LabelGpioStatus26.Name = "LabelGpioStatus26";
-            LabelGpioStatus26.Size = new Size(137, 33);
+            LabelGpioStatus26.Size = new Size(138, 33);
             LabelGpioStatus26.TabIndex = 7;
             LabelGpioStatus26.Tag = "26";
             LabelGpioStatus26.TextAlign = ContentAlignment.MiddleCenter;
@@ -272,10 +272,10 @@
             // LabelGpioStatus25
             // 
             LabelGpioStatus25.BackColor = Color.Yellow;
-            LabelGpioStatus25.Location = new Point(5, 107);
+            LabelGpioStatus25.Location = new Point(6, 107);
             LabelGpioStatus25.Margin = new Padding(4);
             LabelGpioStatus25.Name = "LabelGpioStatus25";
-            LabelGpioStatus25.Size = new Size(137, 33);
+            LabelGpioStatus25.Size = new Size(138, 33);
             LabelGpioStatus25.TabIndex = 6;
             LabelGpioStatus25.Tag = "25";
             LabelGpioStatus25.TextAlign = ContentAlignment.MiddleCenter;
@@ -283,10 +283,10 @@
             // LabelGpioStatus24
             // 
             LabelGpioStatus24.BackColor = Color.Yellow;
-            LabelGpioStatus24.Location = new Point(5, 66);
+            LabelGpioStatus24.Location = new Point(6, 66);
             LabelGpioStatus24.Margin = new Padding(4);
             LabelGpioStatus24.Name = "LabelGpioStatus24";
-            LabelGpioStatus24.Size = new Size(137, 33);
+            LabelGpioStatus24.Size = new Size(138, 33);
             LabelGpioStatus24.TabIndex = 5;
             LabelGpioStatus24.Tag = "24";
             LabelGpioStatus24.TextAlign = ContentAlignment.MiddleCenter;
@@ -294,10 +294,10 @@
             // LabelGpioStatus23
             // 
             LabelGpioStatus23.BackColor = Color.Yellow;
-            LabelGpioStatus23.Location = new Point(5, 26);
+            LabelGpioStatus23.Location = new Point(6, 26);
             LabelGpioStatus23.Margin = new Padding(4);
             LabelGpioStatus23.Name = "LabelGpioStatus23";
-            LabelGpioStatus23.Size = new Size(137, 33);
+            LabelGpioStatus23.Size = new Size(138, 33);
             LabelGpioStatus23.TabIndex = 4;
             LabelGpioStatus23.Tag = "23";
             LabelGpioStatus23.TextAlign = ContentAlignment.MiddleCenter;
