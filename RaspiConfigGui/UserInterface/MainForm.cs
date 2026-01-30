@@ -80,7 +80,10 @@ namespace UserInterface
             }
             finally
             {
-                await InvokeAsync(() => Text = "");
+                if (!IsDisposed && IsHandleCreated) 
+                { 
+                    await InvokeAsync(() => Text = "");
+                }
             }
 
             return;
