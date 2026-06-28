@@ -377,7 +377,7 @@ namespace UserInterface
             if (e.RowIndex == -1 && sort == SortOrder.None)
             {
                 string headerText = dgv.Columns[e.ColumnIndex].HeaderText;
-                Font headerFont = e.CellStyle!.Font;
+                Font headerFont = e.CellStyle!.Font!;
                 Brush headerBrush = new SolidBrush(e.CellStyle.ForeColor);
                 DataGridViewContentAlignment headerAlignment = e.CellStyle.Alignment;
 
